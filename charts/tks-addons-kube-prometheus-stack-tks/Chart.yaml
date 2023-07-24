@@ -1,0 +1,10 @@
+apiVersion: v2
+name: kube-prometheus-stack-tks
+description: Kube prometheus stack for TKS
+type: application
+version: 2.0.0
+
+dependencies:
+  - name: kube-prometheus-stack
+    repository: https://prometheus-community.github.io/helm-charts
+    version: 36.2.0
