@@ -1,3 +1,0 @@
-debug: true
-chart-repos:
-  - bitnami=https://prometheus-community.github.io/helm-charts
