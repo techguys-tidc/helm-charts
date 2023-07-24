@@ -1,6 +1,6 @@
 apiVersion: v2
-name: kube-prometheus-stack-tks
-description: Kube prometheus stack for TKS
+name: kube-prometheus-stack
+description: Kube prometheus stack
 type: application
 version: 2.0.0
 
