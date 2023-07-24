@@ -1,0 +1,39 @@
+{{- if .Values.masterNodeExporter.enabled }}
+apiVersion: 'v1'
+kind: 'Service'
+metadata:
+    labels:
+      app: prometheus-node-exporter
+      release: {{ .Release.Name }}
+      jobLabel: node-exporter
+    name: 'node-exporter-master'
+    namespace: {{ template "kube-prometheus-stack.namespace" . }}    
+spec:
+    externalName: master1-node-exporter
+    type: ExternalName  
+    ports:
+      - name: 'http-metrics'
+        port: {{.Values.masterNodeExporter.port}}
+        protocol: 'TCP'
+        targetPort:  {{.Values.masterNodeExporter.port}}
+
+---
+apiVersion: 'v1'
+kind: 'Endpoints'
+metadata:
+    labels:
+      app: prometheus-node-exporter
+      release: {{ .Release.Name }}
+      jobLabel: node-exporter      
+    name: 'node-exporter-master'
+    namespace: {{ template "kube-prometheus-stack.namespace" . }}   
+subsets:
+  - addresses:
+    {{- range .Values.masterNodeExporter.ips }}
+      - ip: {{ . | quote }}
+    {{- end }}
+    ports:
+      - name: 'http-metrics'
+        port:  {{.Values.masterNodeExporter.port}} 
+        protocol: 'TCP'
+{{- end }}

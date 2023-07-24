@@ -1,0 +1,7 @@
+include:
+  - project: nxcp/devops/gitlab-ci
+    ref: latest
+    file: .gitlab-ci/helm/helm.yml
+
+variables:
+  chart_dir: .
