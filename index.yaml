@@ -28,4 +28,15 @@ entries:
     urls:
     - https://github.com/tidc-tech/helm-charts/releases/download/kube-prometheus-stack-tks-2.0.0/kube-prometheus-stack-tks-2.0.0.tgz
     version: 2.0.0
-generated: "2023-07-24T03:49:04.435000704Z"
+  namespaces:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-09-12T02:53:34.649058072Z"
+    description: A Helm chart for Kubernetes
+    digest: d58a6206a65740514dceb818ef60c0279a28926c48b407208f361ded6f962b03
+    name: namespaces
+    type: application
+    urls:
+    - https://github.com/techguys-tidc/helm-charts/releases/download/namespaces-0.1.0/namespaces-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-09-12T02:53:34.649167272Z"
