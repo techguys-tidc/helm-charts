@@ -1,0 +1,7 @@
+namespaces: 
+# - name: namespaceA
+# - name: namespaceB
+#   annotations:
+#     anno: annovalue
+#   labels:
+#     labelname: labelavalue
