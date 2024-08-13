@@ -28,6 +28,42 @@ entries:
     urls:
     - https://github.com/tidc-tech/helm-charts/releases/download/kube-prometheus-stack-tks-2.0.0/kube-prometheus-stack-tks-2.0.0.tgz
     version: 2.0.0
+  lgtm:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-08-13T07:28:02.916514567Z"
+    dependencies:
+    - condition: loki.enabled
+      name: loki
+      repository: https://grafana.github.io/helm-charts
+      version: 6.7.4
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 8.4.4
+    - alias: tempo
+      condition: tempo.enabled
+      name: tempo-distributed
+      repository: https://grafana.github.io/helm-charts
+      version: ^1.16.0
+    - alias: mimir
+      condition: mimir.enabled
+      name: mimir-distributed
+      repository: https://grafana.github.io/helm-charts
+      version: 5.4.0
+    - alias: postgresql
+      condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ^15.5.20
+    description: LGTM Stack
+    digest: 0b8b6e36c6445a8c8997e6a813091c39a6fb25c3986fac2c1509e4df4f6d0dbb
+    kubeVersion: ^1.20.0-0
+    name: lgtm
+    type: application
+    urls:
+    - https://github.com/techguys-tidc/helm-charts/releases/download/lgtm-0.1.0/lgtm-0.1.0.tgz
+    version: 0.1.0
   namespaces:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -60,4 +96,4 @@ entries:
     urls:
     - https://github.com/techguys-tidc/helm-charts/releases/download/test-ja-0.1.0/test-ja-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-13T06:58:06.792716802Z"
+generated: "2024-08-13T07:28:03.014582383Z"
