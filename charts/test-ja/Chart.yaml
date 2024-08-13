@@ -1,6 +1,6 @@
 apiVersion: v2
 name: test-ja
-description: A Helm chart for Kubernetes 0.2.0 - update
+description: A Helm chart for Kubernetes 0.2.0 - update1
 
 # A chart can be either an 'application' or a 'library' chart.
 #
