@@ -78,6 +78,16 @@ entries:
   test-ja:
   - apiVersion: v2
     appVersion: 1.17.0
+    created: "2024-08-13T07:45:12.391102694Z"
+    description: A Helm chart for Kubernetes 0.2.0 - update1
+    digest: 56dfae111082c3fbcdee3b76b29219605dddda0e50a8f09b1410abd3804b8b88
+    name: test-ja
+    type: application
+    urls:
+    - https://github.com/techguys-tidc/helm-charts/releases/download/test-ja-0.2.1/test-ja-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 1.17.0
     created: "2024-08-13T06:58:06.792703768Z"
     description: A Helm chart for Kubernetes
     digest: 9acac8a136a869644d9171bc224d6efdff0c70c7fbdfbc7ab574c842ff921c06
@@ -96,4 +106,4 @@ entries:
     urls:
     - https://github.com/techguys-tidc/helm-charts/releases/download/test-ja-0.1.0/test-ja-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-13T07:28:03.014582383Z"
+generated: "2024-08-13T07:45:12.391114937Z"
