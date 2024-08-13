@@ -39,4 +39,15 @@ entries:
     urls:
     - https://github.com/techguys-tidc/helm-charts/releases/download/namespaces-0.1.0/namespaces-0.1.0.tgz
     version: 0.1.0
-generated: "2023-09-12T02:53:34.649167272Z"
+  test-ja:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-08-13T05:41:05.402247596Z"
+    description: A Helm chart for Kubernetes
+    digest: 0dff836c7dcbf31aeb95be0e13d9b50ec85d1e982b1da652cd58eeab9aef76f6
+    name: test-ja
+    type: application
+    urls:
+    - https://github.com/techguys-tidc/helm-charts/releases/download/test-ja-0.1.0/test-ja-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-08-13T05:41:05.402257695Z"
