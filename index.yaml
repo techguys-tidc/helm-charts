@@ -31,6 +31,41 @@ entries:
   lgtm:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-08-14T09:32:19.979714426Z"
+    dependencies:
+    - condition: loki.enabled
+      name: loki
+      repository: https://grafana.github.io/helm-charts
+      version: 6.7.4
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 8.4.4
+    - alias: tempo
+      condition: tempo.enabled
+      name: tempo-distributed
+      repository: https://grafana.github.io/helm-charts
+      version: ^1.16.0
+    - alias: mimir
+      condition: mimir.enabled
+      name: mimir-distributed
+      repository: https://grafana.github.io/helm-charts
+      version: 5.4.0
+    - alias: postgresql
+      condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ^15.5.20
+    description: LGTM Stack
+    digest: c0bf1fe30b294b43f79f09a3837aff139063a077802b98b3739e07cccbbbd51a
+    kubeVersion: ^1.20.0-0
+    name: lgtm
+    type: application
+    urls:
+    - https://github.com/techguys-tidc/helm-charts/releases/download/lgtm-0.1.1/lgtm-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-08-13T07:28:02.916514567Z"
     dependencies:
     - condition: loki.enabled
@@ -106,4 +141,4 @@ entries:
     urls:
     - https://github.com/techguys-tidc/helm-charts/releases/download/test-ja-0.1.0/test-ja-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-13T07:45:12.391114937Z"
+generated: "2024-08-14T09:32:19.979729264Z"
