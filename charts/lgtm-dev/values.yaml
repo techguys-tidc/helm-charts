@@ -1,3 +1,6 @@
+
+
+
 # Compatible with Huawei Cloud (CCE)
 global:
   dnsNamespace: kube-system
