@@ -2,7 +2,6 @@
 servicegraph:
   enabled: true
 
----
 # Cluster settings
 
 cluster:
