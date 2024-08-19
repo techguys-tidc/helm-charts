@@ -1,0 +1,329 @@
+# architech : using S3 to store longterm
+
+
+
+# global:
+  # dnsNamespace: kube-system
+  # dnsService: rke2-coredns-rke2-coredns
+tempo:
+  distributor:
+    replicas: 1
+  ingester:
+    config:
+      replication_factor: 1
+ 
+  traces:
+    jaeger:
+      grpc:
+        enabled: true
+        receiverConfig: {}
+      thriftBinary:
+        enabled: true
+        receiverConfig: {}
+      thriftCompact:
+        enabled: true
+        receiverConfig: {}
+      thriftHttp:
+        enabled: true
+        receiverConfig: {}
+    opencensus:
+      enabled: true
+      receiverConfig: {}
+    otlp:
+      grpc:
+        enabled: true
+        receiverConfig: {}
+      http:
+        enabled: true
+        receiverConfig: {}
+    zipkin:
+      enabled: true
+      receiverConfig: {}
+
+extraConfig: {}
+ 
+#mc alias set test https://ctl1-mimir.oss-cn-bangkok-tidc-d01-a.asr-ops.clouds.trueidc.com/ sQRRfA6ITGtj5twN yNgF7ycRpQihwDr0aLKee9RCX5402h
+loki:
+#distrubuted
+  loki:
+    schemaConfig:
+      configs:
+        - from: 2024-04-01
+          store: tsdb
+          object_store: s3
+          schema: v13
+          index:
+            prefix: loki_index_
+            period: 24h
+    distributor:
+      ring:
+        kvstore:
+          store: memberlist
+    storage:
+      bucketNames:
+        admin: mon-pf1
+        chunks: mon-pf1
+        ruler: mon-pf1
+      # mc alias set ack https://oss-cn-bangkok-tidc-d01-a.asr-ops.clouds.trueidc.com/ sQRRfA6ITGtj5twN yNgF7ycRpQihwDr0aLKee9RCX5402h
+      s3:
+        accessKeyId: sQRRfA6ITGtj5twN
+        endpoint: http://oss-cn-bangkok-tidc-d01-a.asr-ops.clouds.trueidc.com/
+        region: cn-bangkok-tidc-d01
+        #s3ForcePathStyle: true
+        #s3: s3://sQRRfA6ITGtj5twN:yNgF7ycRpQihwDr0aLKee9RCX5402h@oss-cn-bangkok-tidc-d01-a.asr-ops.clouds.trueidc.com:443      
+        secretAccessKey: yNgF7ycRpQihwDr0aLKee9RCX5402h          
+    ingester:
+      chunk_encoding: snappy
+      wal:
+        # after this value, data will flush to wal.
+        replay_memory_ceiling: 512MB  
+    commonConfig:      
+      replication_factor: 1   
+    limits_config:
+      #to support scaling in the future
+      ingestion_rate_strategy: local
+      ingestion_rate_mb: 20
+      ingestion_burst_size_mb: 100
+      max_global_streams_per_user: 0
+
+      # default 5000
+      max_streams_per_user: 5000
+
+      # max_cache_freshness_per_query: 10m
+      # max_query_length: 12000h
+      # max_query_parallelism: 256
+      # reject_old_samples: true
+      # reject_old_samples_max_age: 168h    
+
+    # runtime_config:
+    #   hlex:
+    #     chunk_idle_period: 5m
+    #     chunk_target_size: 1572864
+    #     max_chunk_age: 30m      
+
+    tracing:
+      enabled: false
+    #querier:
+      # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
+      #max_concurrent: 4
+
+  #gateway:
+  #  ingress:
+  #    enabled: true
+  #    hosts:
+  #      - host: FIXME
+  #        paths:
+  #          - path: /
+  #            pathType: Prefix
+
+  deploymentMode: Distributed
+
+  ingester:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: ingester
+              topologyKey: kubernetes.io/hostname
+    zoneAwareReplication:
+      # -- Enable zone awareness.
+      enabled: false
+    replicas: 3
+    extraEnv:
+      - name: JAEGER_ENDPOINT
+        value: "http://meta-alloy.meta.svc.cluster.local:14268/api/traces"
+        # This sets the Jaeger endpoint where traces will be sent.
+        # The endpoint points to the mmc-alloy service in the default namespace at port 14268.
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 2500Mi
+      requests:
+        cpu: 500m
+        memory: 1500Mi
+    autoscaling:
+        enabled: false
+        minReplicas: 2
+        maxReplicas: 6
+        targetCPUUtilizationPercentage: 60
+        behavior:
+          enabled: true
+
+    persistence:
+      enabled: true
+      inMemory: false
+      claims:
+        - name: data
+          size: 200Gi
+          storageClass: alicloud-disk-cloud-pperf           
+  querier:
+    replicas: 3
+    maxUnavailable: 2
+  queryFrontend:
+    replicas: 1
+    maxUnavailable: 1
+  queryScheduler:
+    replicas: 2
+  distributor:
+    replicas: 3
+    resources:
+      limits:
+        cpu: 1500m
+        memory: 1500Mi
+      requests:
+        cpu: 500m
+        memory: 500Mi  
+    maxUnavailable: 1
+    autoscaling:
+        enabled: true
+        minReplicas: 3
+        maxReplicas: 6
+        targetCPUUtilizationPercentage: 90
+        behavior:
+          enabled: true
+
+  compactor:
+    replicas: 1
+    persistence:
+      enabled: true
+      inMemory: false
+      claims:
+        - name: data
+          size: 20Gi
+          storageClass: alicloud-disk-cloud-pperf
+  indexGateway:
+    replicas: 2
+    maxUnavailable: 1
+
+  bloomCompactor:
+    replicas: 0
+  bloomGateway:
+    replicas: 0
+
+  chunksCache:
+    # -- Specifies whether memcached based chunks-cache should be enabled
+    enabled: false 
+
+  # Enable minio for storage
+  minio:
+    enabled: false
+
+  # Zero out replica counts of other deployment modes
+  backend:
+    replicas: 0
+  read:
+    replicas: 0
+  write:
+    replicas: 0
+
+  singleBinary:
+    replicas: 0
+
+
+grafana:
+  #set replica1
+  replicas: 1
+
+  persistence:
+    type: pvc
+    enabled: true
+    size: 20Gi
+    storageClassName: alicloud-disk-cloud-pperf 
+
+  # Provision grafana-dashboards-kubernetes
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'grafana-dashboards-kubernetes'
+        orgId: 1
+        folder: 'Kubernetes'
+        type: file
+        disableDeletion: true
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/grafana-dashboards-kubernetes
+  dashboards:
+    grafana-dashboards-kubernetes:
+      k8s-system-api-server:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+        token: ''
+      k8s-system-coredns:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+        token: ''
+      k8s-views-global:
+        # url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+        url: https://raw.githubusercontent.com/techguys-tidc/grafana-dashboard/main/lgtm/k8s-views-global.json
+
+        token: ''
+      k8s-views-namespaces:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+        token: ''
+      k8s-views-nodes:
+        #download for id: 1860
+        url: https://grafana.com/api/dashboards/1860/revisions/37/download
+        # url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json      
+        token: ''
+      k8s-views-pods:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+        token: ''
+mimir:
+  enabled: true
+  mimir:
+    structuredConfig:
+      common:
+        storage:
+          backend: s3
+          s3:
+            bucket_name: "mon-pf1-mimir"
+            endpoint: "oss-cn-bangkok-tidc-d01-a.asr-ops.clouds.trueidc.com:443"
+            # insecure: true
+            access_key_id: "sQRRfA6ITGtj5twN" # This is a secret injected via an environment variable
+            secret_access_key: "yNgF7ycRpQihwDr0aLKee9RCX5402h" # This is a secret injected via an environment variable
+            http:
+              insecure_skip_verify: true
+      alertmanager_storage:
+        storage_prefix: alert
+      ruler_storage:
+        storage_prefix: ruler
+  alertmanager:
+    enabled: true
+    persistentVolume:
+      enabled: true
+      storageClass: alicloud-disk-cloud-pperf
+      size: 20Gi
+  compactor:
+    enabled: true
+    persistentVolume:
+      enabled: true
+      storageClass: alicloud-disk-cloud-pperf
+      size: 20Gi
+  ingester:
+    enabled: true
+    replicas: 2
+    zoneAwareReplication:
+      enabled: false    
+    persistentVolume:
+      enabled: true
+      storageClass: alicloud-disk-cloud-pperf
+      size: 20Gi
+  store_gateway:
+    enabled: true
+    replicas: 2
+    zoneAwareReplication:
+      enabled: false    
+    persistentVolume:
+      enabled: true
+      storageClass: alicloud-disk-cloud-pperf
+      size: 20Gi
+  ruler:
+    enabled: true
+  minio:
+    enabled: false
+    # persistence:
+    #   enabled: true
+    #   size: 20Gi
+    #   storageClass: alicloud-disk-cloud-pperf
