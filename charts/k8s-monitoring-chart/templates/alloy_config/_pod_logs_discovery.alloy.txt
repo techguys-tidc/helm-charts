@@ -36,6 +36,12 @@ discovery.relabel "pod_logs" {
     action = "replace"
     target_label = "pod"
   }
+{{- if .Values.logs.pod_logs.excludeLabelPodName }}
+  rule {
+    regex=  "pod"
+    action = "labeldrop"
+  }
+{{- end }}
   rule {
     source_labels = ["__meta_kubernetes_pod_container_name"]
     action = "replace"
