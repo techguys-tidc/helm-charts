@@ -3,6 +3,67 @@ entries:
   k8s-monitoring:
   - apiVersion: v2
     appVersion: 2.6.0
+    created: "2024-08-19T07:07:03.352028989Z"
+    dependencies:
+    - name: alloy
+      repository: https://grafana.github.io/helm-charts
+      version: 0.5.0
+    - alias: alloy-events
+      condition: logs.cluster_events.enabled
+      name: alloy
+      repository: https://grafana.github.io/helm-charts
+      version: 0.5.0
+    - alias: alloy-logs
+      condition: logs.pod_logs.enabled
+      name: alloy
+      repository: https://grafana.github.io/helm-charts
+      version: 0.5.0
+    - alias: alloy-profiles
+      condition: profiles.enabled
+      name: alloy
+      repository: https://grafana.github.io/helm-charts
+      version: 0.5.0
+    - condition: kube-state-metrics.enabled
+      name: kube-state-metrics
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 5.21.0
+    - condition: prometheus-node-exporter.enabled
+      name: prometheus-node-exporter
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 4.37.0
+    - condition: prometheus-operator-crds.enabled
+      name: prometheus-operator-crds
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 13.0.1
+    - condition: prometheus-windows-exporter.enabled
+      name: prometheus-windows-exporter
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 0.3.1
+    - condition: opencost.enabled
+      name: opencost
+      repository: https://opencost.github.io/opencost-helm-chart
+      version: 1.40.0
+    - condition: kepler.enabled
+      name: kepler
+      repository: https://sustainable-computing-io.github.io/kepler-helm-chart
+      version: 0.5.7
+    description: from original 1.4.2
+    digest: a613fe705495050e2833d6f565c7cf2182bd1ea432113a3d2af52224d31e5fd5
+    icon: https://raw.githubusercontent.com/grafana/grafana/main/public/img/grafana_icon.svg
+    maintainers:
+    - email: pete.wall@grafana.com
+      name: petewall
+    - email: stephen.lang@grafana.com
+      name: skl
+    name: k8s-monitoring
+    sources:
+    - https://github.com/grafana/k8s-monitoring-helm/tree/main/charts/k8s-monitoring
+    type: application
+    urls:
+    - https://github.com/techguys-tidc/helm-charts/releases/download/k8s-monitoring-10.0.3/k8s-monitoring-10.0.3.tgz
+    version: 10.0.3
+  - apiVersion: v2
+    appVersion: 2.6.0
     created: "2024-08-15T02:26:05.52269575Z"
     dependencies:
     - name: alloy
@@ -238,6 +299,69 @@ entries:
           url: https://github.com/grafana/tempo
     apiVersion: v2
     appVersion: ^7.3.9
+    created: "2024-08-19T07:07:03.701863365Z"
+    dependencies:
+    - alias: grafana
+      condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 8.4.4
+    - condition: loki.enabled
+      name: loki
+      repository: https://grafana.github.io/helm-charts
+      version: 6.7.4
+    - alias: mimir
+      condition: mimir.enabled
+      name: mimir-distributed
+      repository: https://grafana.github.io/helm-charts
+      version: 5.4.0
+    - alias: tempo
+      condition: tempo.enabled
+      name: tempo-distributed
+      repository: https://grafana.github.io/helm-charts
+      version: ^1.16.0
+    - alias: grafana-oncall
+      condition: grafana-oncall.enabled
+      name: oncall
+      repository: https://grafana.github.io/helm-charts
+      version: ^1.3.114
+    description: from  2.1.0
+    digest: d1a6c544334c9613f9841a79695ed30ffebf9febede58c69f36946c2c22fce5b
+    home: https://grafana.com/oss/
+    icon: https://artifacthub.io/image/b4fed1a7-6c8f-4945-b99d-096efa3e4116
+    keywords:
+    - monitoring
+    - traces
+    - metrics
+    - logs
+    maintainers:
+    - name: timberhill
+    name: lgtm-distributed
+    sources:
+    - https://grafana.github.io/helm-charts
+    - https://github.com/grafana/grafana
+    - https://github.com/grafana/loki
+    - https://github.com/grafana/mimir
+    - https://github.com/grafana/tempo
+    type: application
+    urls:
+    - https://github.com/techguys-tidc/helm-charts/releases/download/lgtm-distributed-10.0.1/lgtm-distributed-10.0.1.tgz
+    version: 10.0.1
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/grafana/helm-charts
+        - name: Grafana
+          url: https://github.com/grafana/grafana
+        - name: Loki
+          url: https://github.com/grafana/loki
+        - name: Mimir
+          url: https://github.com/grafana/mimir
+        - name: Tempo
+          url: https://github.com/grafana/tempo
+    apiVersion: v2
+    appVersion: ^7.3.9
     created: "2024-08-14T09:37:44.357586951Z"
     dependencies:
     - alias: grafana
@@ -328,4 +452,4 @@ entries:
     urls:
     - https://github.com/techguys-tidc/helm-charts/releases/download/test-ja-0.1.0/test-ja-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-15T02:26:05.522713643Z"
+generated: "2024-08-19T07:07:03.701893061Z"
