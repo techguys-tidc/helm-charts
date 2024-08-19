@@ -1,0 +1,5 @@
+10.0.1 change log from orginal 
+- preferredDuringSchedulingIgnoredDuringExecution for ingester
+-  httpHeaderValue1: "{{ .Release.Name }}" in default values.yaml for loki, mimir,tempo
+
+
