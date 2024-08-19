@@ -1,2 +1,4 @@
 10.0.2
   remove --- from value file
+10.0.3
+  pod_logs.excludeLabelPodName: true    

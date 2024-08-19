@@ -1,7 +1,8 @@
 #enable service-graph feature! 2
 servicegraph:
   enabled: true
-
+pod_logs:
+  excludeLabelPodName: true
 # Cluster settings
 
 cluster:
@@ -1337,6 +1338,10 @@ logs:
 
   # Settings for Kubernetes pod logs from the worker
   pod_logs:
+    
+    #remove pod label
+    excludeLabelPodName: false
+
     # -- Capture and forward logs from Kubernetes pods
     # @section -- Logs Scrape: Pod Logs
     enabled: true
