@@ -28,6 +28,7 @@ local:
   minio:
     enabled: false # This should be set to true if any of the previous is enabled
 grafana:
+  pvc_size: 1Gi
   version: 10.4.2
   # Gateway ingress configuration
   ingress:
