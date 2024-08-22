@@ -473,6 +473,37 @@ entries:
     urls:
     - https://github.com/techguys-tidc/helm-charts/releases/download/lgtm-distributed-10.0.0/lgtm-distributed-10.0.0.tgz
     version: 10.0.0
+  meta-monitoring:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2024-08-22T03:25:14.340374303Z"
+    dependencies:
+    - condition: local.logs.enabled
+      name: loki
+      repository: https://grafana.github.io/helm-charts
+      version: 6.5.2
+    - name: alloy
+      repository: https://grafana.github.io/helm-charts
+      version: 0.2.0
+    - condition: local.metrics.enabled
+      name: mimir-distributed
+      repository: https://grafana.github.io/helm-charts
+      version: 5.3.0
+    - condition: local.traces.enabled
+      name: tempo-distributed
+      repository: https://grafana.github.io/helm-charts
+      version: 1.9.9
+    - condition: local.minio.enabled
+      name: minio
+      repository: https://charts.min.io
+      version: 5.2.0
+    description: from original 1.0.0
+    digest: cbe7c77f69bf10612ec32b283b5517e4a729bf7ce603208fa9329637f10f7572
+    name: meta-monitoring
+    type: application
+    urls:
+    - https://github.com/techguys-tidc/helm-charts/releases/download/meta-monitoring-1.0.1/meta-monitoring-1.0.1.tgz
+    version: 1.0.1
   namespaces:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -515,4 +546,4 @@ entries:
     urls:
     - https://github.com/techguys-tidc/helm-charts/releases/download/test-ja-0.1.0/test-ja-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-22T02:40:54.694707048Z"
+generated: "2024-08-22T03:25:14.340392677Z"
