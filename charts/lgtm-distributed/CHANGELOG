@@ -1,5 +1,8 @@
 10.0.1 change log from orginal 
 - preferredDuringSchedulingIgnoredDuringExecution for ingester
 -  httpHeaderValue1: "{{ .Release.Name }}" in default values.yaml for loki, mimir,tempo
-
+10.0.2
+- set grafana->mimir timeInterval to 60s . match with alloy
+- set grafana->loki timeout to 5min.
+- 
 

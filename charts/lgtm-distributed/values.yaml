@@ -16,6 +16,7 @@ grafana:
           url: http://{{ .Release.Name }}-loki-gateway
           isDefault: false
           jsonData:
+            timeout: "300" #second
             httpHeaderName1: X-Scope-OrgID
           secureJsonData:
             httpHeaderValue1: "{{ .Release.Name }}"          
@@ -26,6 +27,7 @@ grafana:
           url: http://{{ .Release.Name }}-mimir-nginx/prometheus
           isDefault: true
           jsonData:
+            timeInterval: "60s"
             httpHeaderName1: X-Scope-OrgID
           secureJsonData:
             httpHeaderValue1: "{{ .Release.Name }}"            
@@ -46,6 +48,7 @@ grafana:
               datasourceUid: prom
             httpHeaderName1: X-Scope-OrgID
           secureJsonData:
+            
             httpHeaderValue1: "{{ .Release.Name }}"            
 
 loki:
