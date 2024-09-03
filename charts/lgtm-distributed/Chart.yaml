@@ -58,4 +58,4 @@ sources:
 - https://github.com/grafana/mimir
 - https://github.com/grafana/tempo
 type: application
-version: 10.0.2
+version: 10.0.3
