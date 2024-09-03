@@ -1745,20 +1745,12 @@ ingester:
   # @default -- Hard node anti-affinity
   affinity:
     podAntiAffinity:
-      # requiredDuringSchedulingIgnoredDuringExecution:
-      #   - labelSelector:
-      #       matchLabels:
-      #         app.kubernetes.io/component: ingester
-      #     topologyKey: kubernetes.io/hostname
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: ingester
+          topologyKey: kubernetes.io/hostname
    
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/component: ingester
-            topologyKey: kubernetes.io/hostname
-
  # -- Pod Disruption Budget maxUnavailable
   maxUnavailable: 1
   # -- Node selector for ingester pods
